@@ -5,7 +5,6 @@ Home assistant Configuration (YAMLs)
 This is my Home Assistant Configuration created on a Blue! Hardware.
 
 
-- Android Devices (iPads, iPods, iPhones)
 - General view all rooms except Living room
 ![alt text](screenshots/generale.png "Home Main View")
 
@@ -13,7 +12,7 @@ This is my Home Assistant Configuration created on a Blue! Hardware.
 - Living Room 
 .   ![alt text](screenshots/sala.png "Sala View")
 
-- All the sensors
+- Madda's room
 ![alt text](screenshots/madda.png "Madda's room and bathroom")
 
 - Basement and all
