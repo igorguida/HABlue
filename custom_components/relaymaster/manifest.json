@@ -1,0 +1,9 @@
+{
+  "domain": "relaymaster",
+  "name": "Scheda Relaymaster",
+  "version": "1.0",
+  "documentation": "https://github.com/trisk/switch.relaymaster",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}
