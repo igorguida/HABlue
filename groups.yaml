@@ -1,0 +1,440 @@
+  casa:
+    name: Casa
+    icon: mdi:home
+    entities:
+      - device_tracker.iphonedimadda
+      - device_tracker.iphonedicoletta
+      - device_tracker.iphonediigor
+      - group.cucina
+      - group.stanza_igor
+      - group.stanza_niky_igor
+      - group.stanza_madda
+      - group.bagno_madda
+      - group.bagno
+      - group.sgabuzzino
+      - group.giardino
+      - alarm_control_panel.antifurto
+        #      - group.sala
+        #      - group.climate
+        #      - group.camera
+        #      - group.luci
+        #      - group.all_devices
+
+
+  automations:
+        name: Automations
+        icon: mdi:robot
+        entities:
+          - automation.clima_mattino_start
+          - automation.clima_mattino_stop
+          - automation.clima_pomeriggio_start
+          - automation.clima_pomeriggio_stop
+          - automation.clima_sera_start
+          - automation.clima_sera_stop
+          - automation.apre_tapp_madda_0700
+          - automation.apre_tapp_bagno_madda_0700
+          - automation.chiude_tapp_madda_2200
+          - automation.chiude_tapp_madda_2300
+          - automation.apri_tapp_matrimoniale_0700
+          - automation.apri_tapp_bagno_0700
+          - automation.chiude_tapp_2400
+          - automation.spegni_luci_hue_901
+          - automation.spegni_luci_900
+          - automation.spegni_luci_1210
+          - automation.apri_tapp_sala_bonsai_giardino_0800
+          - automation.apre_bonsai_stuigor_sala_0015
+          - automation.tapp_meta_sala_bonsai_stuigor_0016
+
+
+  climate:
+    name: Clima
+    icon: mdi:thermometer-lines
+    entities:
+      - climate.bagno_nikyigor
+      - climate.bagnotaverna_bagnotaverna 
+      - climate.TV_televisione
+      - climate.sala_bonsai
+      - climate.sgabuzzino_sgabuzzino
+      - climate.stanza_igorniky
+      - climate.stanza_ospiti_stanza_ospiti
+      - climate.studio_nico_studionico
+      - climate.studioigor
+      - climate.madda
+      - climate.bagnomadda
+      - climate.design
+      - climate.cucina
+      - climate.pianoterra
+      - climate.primopiano
+      #- sensor.temperature_primopiano
+      - switch.zona_riscaldamento_x
+      - switch.zona_riscaldamento_p0
+      - switch.zona_riscaldamento_p1 
+      - switch.zona_riscaldamento_bagno
+      - switch.zona_riscaldamento_cucina
+      - switch.zona_riscaldamento_madda
+      - switch.zona_riscaldamento_sala
+      - switch.zona_riscaldamento_studio
+        #      - sensor.yr_cloudiness
+        #      - sensor.yr_dewpoint_temperature
+        #      - sensor.yr_humidity
+        #      - sensor.yr_temperature
+
+
+  sala:
+    name: Sala
+    icon: mdi:sofa
+    entities:
+      #      - light.sala
+        #      - light.libreria
+      - light.lampada_legno
+      - light.lampada_tiffany
+      - light.hue_color_wifi
+      - light.hue_color_tele
+      - climate.TV_televisione
+      - climate.sala_bonsai
+      - climate.design
+        #      - media_player.tv_sala
+        #      - media_player.salottoigor
+      - remote.apple_tv
+      - media_player.apple_tv
+      - switch.faretti_sala
+      - switch.luce_faretto_divanoigor
+      - switch.luce_faretto_divanoniki
+      - switch.luce_int_pranzo
+      - switch.luce_int_studio
+      - switch.presa_studio
+      - cover.tap_sala
+      - cover.tap_bonsai
+      - cover.tap_giardino
+      - switch.consenso_sirena
+      - switch.inserimento_disins_ufficio
+      - switch.luce_int_libreria
+#      - switch.luce_int_rgb
+      - switch.luce_int_nuovoingresso
+#      - zwave._
+#      - zwave.__3
+#      - zwave.__8
+
+  stanza_niky_igor:
+    name: Camera Niky Igor
+    entities:
+      - switch.luce_int_igorniky
+      - switch.presa_igorniky
+      - climate.stanza_igorniky
+      - cover.tap_matrimoniale 
+
+  stanza_madda:
+    name: Camera Madda
+    entities:
+      - switch.luce_int_madda
+      - switch.presa_madda
+      - climate.madda
+      - cover.tap_madda
+
+
+  stanza_igor:
+    name: Studio Igor
+    entities:
+      - switch.luce_int_studioigor
+      - switch.presa_igor
+      - climate.studioigor
+      - cover.tap_studioigor
+
+  cucina:
+    name: Cucina
+    entities:
+      - light.lightstrip_cucina
+      - switch.luce_int_cucina1
+      - switch.luce_int_cucina2
+      - switch.presa_cappa
+      - switch.presa_cucina1
+      - switch.presa_cucina2
+      - switch.presa_cucina3
+      - climate.cucina
+
+
+
+  bagno:
+    name: Bagno Niky Igor
+    entities:
+      - switch.luce_int_bagno
+      - switch.luce_int_specchiera
+      - climate.bagno_nikyigor
+      - cover.tap_bagno
+
+  bagno_madda:
+    name: Bagno Madda
+    entities:
+      - switch.luce_int_bagnomadda
+      - switch.luce_int_specmadda
+      - climate.bagnomadda
+      - cover.tap_bagnomadda
+
+
+  sgabuzzino:
+    name: Sgabuzzino
+    entities:
+      - switch.luce_int_sgabuzzino
+      - switch.presa_sgabuzzino
+      - climate.sgabuzzino_sgabuzzino
+      - cover.tap_sgabuzzino
+
+  giardino:
+    name: Giardino
+    entities:
+      - switch.luce_ext_giardino
+      - switch.luce_ext_sopraporta
+      - cover.tap_giardino
+
+  taverna:
+    name: Taverna
+    icon: mdi:stairs
+    entities:
+      - group.bagnotaverna
+      - group.stanzaospiti
+      - group.stanzaniky
+      - switch.luce_down_bagnodisotto
+      - switch.luce_down_cameranikyigordisotto
+      - switch.luce_down_ingstudio
+      - switch.luce_down_istudio
+      - switch.luce_down_lavanderiadisotto
+      - switch.luce_down_nstudio
+      - switch.luce_down_specchierabagnodisotto
+      - switch.presa_cameraospiti
+
+  bagnotaverna:
+    name: "Bagno Ospiti"
+    entities:
+      - switch.luce_down_bagnodisotto
+      - switch.luce_down_specchierabagnodisotto
+      - switch.luce_down_lavanderiadisotto
+      - climate.bagnotaverna_bagnotaverna
+
+  stanzaospiti:
+    name: "Stanza Ospiti"
+    entities:
+      - switch.luce_down_cameranikyigordisotto
+      - switch.presa_cameraospiti
+      - climate.stanza_ospiti_stanza_ospiti
+
+  stanzaniky:
+    name: "Studio Niky"
+    entities:
+      - switch.luce_down_ingstudio
+      - switch.luce_down_istudio
+      - switch.luce_down_nstudio
+      - climate.studio_nico_studionico
+
+  luci:
+    name: Luci
+    icon: mdi:lightbulb
+    entities:
+      #      - light.sala
+        #      - light.libreria
+      - light.lampada_legno
+      - light.lampada_tiffany
+      - light.hue_color_wifi
+      - light.hue_color_tele
+      - light.lightstrip_cucina
+      - switch.faretti_sala
+      - switch.luce_faretto_divanoigor
+      - switch.luce_faretto_divanoniki
+      - switch.luce_int_pranzo
+      - switch.luce_int_studio
+      - switch.luce_int_libreria
+      #- switch.luce_int_rgb
+      - switch.luce_down_bagnodisotto
+      - switch.luce_down_cameranikyigordisotto
+      - switch.luce_down_ingstudio
+      - switch.luce_down_istudio
+      - switch.luce_down_lavanderiadisotto
+      - switch.luce_down_nstudio
+      - switch.luce_down_specchierabagnodisotto
+      - switch.luce_int_cucina1
+      - switch.luce_int_cucina2
+      - switch.luce_int_bagnomadda
+      - switch.luce_int_bagno
+      - switch.luce_ext_giardino
+      - switch.luce_ext_sopraporta
+      - switch.luce_int_igorniky
+      - switch.luce_int_madda
+      - switch.luce_int_nuovoingresso
+      - switch.luce_int_sgabuzzino
+      - switch.luce_int_specchiera
+      - switch.luce_int_specmadda
+      - switch.luce_int_studioigor
+
+
+  luci_allarme:
+    name: luciallarme
+    entities:
+      - light.lampada_legno
+      - light.lampada_tiffany
+      - light.hue_color_wifi
+      - light.hue_color_tele
+      - light.lightstrip_cucina
+      - switch.luce_faretto_divanoigor
+      - switch.luce_int_pranzo
+      - switch.luce_int_studio
+      - switch.luce_int_libreria
+      - switch.luce_ext_sopraporta
+      - switch.luce_int_cucina1
+      - switch.luce_ext_giardino
+      - switch.luce_down_ingstudio
+      - switch.luce_down_istudio
+
+  motoritap:
+    name: MotTap
+    icon: mdi:apple-finder
+    entities:
+      - switch.tapparella_bagno1_a
+      - switch.tapparella_bagno1_b
+      - switch.tapparella_bagno_a
+      - switch.tapparella_bagno_b
+      - switch.tapparella_bonsai_a
+      - switch.tapparella_bonsai_b
+      - switch.tapparella_giardino_a 
+      - switch.tapparella_giardino_b
+      - switch.tapparella_igorniky_a
+      - switch.tapparella_igorniky_b 
+      - switch.tapparella_madda_a 
+      - switch.tapparella_madda_b
+      - switch.tapparella_sala_a
+      - switch.tapparella_sala_b
+      - switch.tapparella_sgabuzzino_a 
+      - switch.tapparella_sgabuzzino_b
+      - switch.tapparella_studioigor_a
+      - switch.tapparella_studioigor_b
+
+  tapparelle:
+    name: Tapparelle
+    icon: mdi:blinds
+    entities:
+      - cover.tap_madda
+      - cover.tap_bagnomadda
+      - cover.tap_studioigor
+      - cover.tap_giardino
+      - cover.tap_sala
+      - cover.tap_bonsai
+      - cover.tap_sgabuzzino
+      - cover.tap_bagno
+      - cover.tap_matrimoniale
+
+
+  prese:
+    name: Prese
+    icon: mdi:flash
+    entities:
+      - switch.presa_cameraospiti
+      - switch.presa_cappa
+      - switch.presa_cucina1
+      - switch.presa_cucina2
+      - switch.presa_cucina3
+      - switch.presa_igor
+      - switch.presa_igorniky
+      - switch.presa_madda
+      - switch.presa_sgabuzzino
+      - switch.presa_studio
+
+  sensori:
+    name: Sensori
+    icon: mdi:gauge
+    entities: 
+      - binary_sensor.anomalia_radio 
+      - binary_sensor.antimanomissione 
+      - binary_sensor.finestra_bagnoigorniky 
+      - binary_sensor.finestra_bonsai 
+      - binary_sensor.finestra_giardino 
+      - binary_sensor.finestra_igorniky 
+      - binary_sensor.finestra_sala 
+      - binary_sensor.finestra_sgabuzzino 
+      - binary_sensor.finestra_taverna 
+      - binary_sensor.manomissione_sirena 
+      - binary_sensor.pulsante_anticamera_alto 
+      - binary_sensor.pulsante_anticamera_basso 
+      - binary_sensor.pulsante_anticamera_centrale 
+      - binary_sensor.pulsante_bagno 
+      - binary_sensor.pulsante_ext_giardino 
+      - binary_sensor.pulsante_igorniky 
+      - binary_sensor.pulsante_ingresso_dx 
+      - binary_sensor.pulsante_int_cucina1    
+      - binary_sensor.pulsante_int_cucina3     
+      - binary_sensor.pulsante_int_cucina4    
+      - binary_sensor.pulsante_int_madda 
+      - binary_sensor.pulsante_int_madda_2 
+      - binary_sensor.pulsante_int_nuovoingressoprimoc 
+      - binary_sensor.pulsante_int_nuovoingressoprimod 
+      - binary_sensor.pulsante_int_nuovoingressoprimos 
+      - binary_sensor.pulsante_int_studioigor
+      - binary_sensor.pulsante_nuovaanticamera_destro  
+      - binary_sensor.pulsante_nuovaanticamera_sinistr  
+      - binary_sensor.pulsante_sgabuzzino_ingressoalto 
+      - binary_sensor.pulsante_sgabuzzino_ingressobass  
+      - binary_sensor.pulsante_sgabuzzino_lavandino     
+      - binary_sensor.pulsante_tapparella_giardino  
+      - binary_sensor.pulsante_tav_dentrobagnodisotto
+      - binary_sensor.pulsante_tav_fuoribagnodisotto   
+      - binary_sensor.pulsante_tav_inferiorecameraniky  
+      - binary_sensor.pulsante_tav_scaladestro 
+      - binary_sensor.pulsante_tav_scalasinistroalto 
+      - binary_sensor.pulsante_tav_scalasinistrobasso  
+      - binary_sensor.pulsante_tav_singolocameranikyig  
+      - binary_sensor.pulsante_tav_superiorecameraniky 
+      - binary_sensor.pulsanti_ingresso_dx_giu
+      - binary_sensor.pulsanti_ingresso_dx_su 
+      - binary_sensor.pulsanti_ingresso_sx_giu
+      - binary_sensor.pulsanti_ingresso_sx_su 
+      - binary_sensor.radar_bagnomadda  
+      - binary_sensor.radar_cucina  
+      - binary_sensor.radar_igorniky 
+      - binary_sensor.radar_maddalena 
+      - binary_sensor.radar_salapranzo 
+      - binary_sensor.radar_studioigor
+      - binary_sensor.radar_studiotel  
+      - binary_sensor.radar_tavernastudio    
+      - binary_sensor.segnalazione_allarme_ufficio  
+      - binary_sensor.sensore_blindata  
+      - binary_sensor.sensore_finestrabagnomadda    
+      - binary_sensor.sensore_finestragrandecucina     
+      - binary_sensor.sensore_finestramadda   
+      - binary_sensor.sensore_finestrapiccoladxcucina   
+      - binary_sensor.sensore_finestrapiccolasxcucina 
+      - binary_sensor.sensore_finestrarototraslante   
+      - binary_sensor.sensore_finestrastudioigor 
+      - binary_sensor.sensore_portaingresso 
+      - binary_sensor.sensore_tapparellabagnomadda
+      - binary_sensor.sensore_tapparellamadda
+      - binary_sensor.sensore_tapparellastudioigor 
+      - binary_sensor.stato_impianto 
+      - binary_sensor.tapparella_bagnoigorniky 
+      - binary_sensor.tapparella_bonsai 
+      - binary_sensor.tapparella_giardino 
+      - binary_sensor.tapparella_igorniky 
+      - binary_sensor.tapparella_madda 
+      - binary_sensor.tapparella_sala
+      - binary_sensor.tapparella_sgabuzzino
+
+#  camera:
+#    name: Videocamere
+#    entities:
+#      - camera.bagnomaddacucina
+#      - camera.boxgiardino
+#      - camera.cucina
+#      - camera.giardino
+#      - camera.ingresso
+#      - camera.sgabuzzinobagnoletto
+#      - camera.taverna
+#
+#
+#  camera:
+#    name: Videocamere
+#    icon: mdi:camera
+#    entities:
+#      - camera.matrbagnosgab 
+#      - camera.boxgiardino
+#      - camera.bagnomadda
+#      - camera.ipcbo
+#      - camera.ingresso
+#      - camera.taverna
+
+
