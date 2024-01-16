@@ -62,7 +62,7 @@ climate:
     heater: switch.zona_riscaldamento_cucina
     target_sensor: sensor.temperature_cucina
     min_temp: 15
-    max_temp: 22
+    max_temp: 23
     target_temp: 20
     cold_tolerance: 0.3
     hot_tolerance: 0

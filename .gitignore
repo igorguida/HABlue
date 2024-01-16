@@ -5,7 +5,7 @@
 !*.yaml
 !.gitignore
 !*.md
-!/custom_components
+!custom_components/relaymaster
 
 # Ignore folders.
 .storage
