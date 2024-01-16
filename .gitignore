@@ -6,6 +6,7 @@
 !.gitignore
 !*.md
 !custom_components/relaymaster
+!screenshoots
 
 # Ignore folders.
 .storage
