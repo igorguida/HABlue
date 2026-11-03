@@ -1,9 +1,10 @@
 {
   "domain": "relaymaster",
   "name": "Scheda Relaymaster",
-  "version": "1.0",
-  "documentation": "https://github.com/trisk/switch.relaymaster",
+  "version": "1.1",
+  "documentation": "https://github.com/igorguida/switch.relaymaster",
   "dependencies": [],
-  "codeowners": [],
-  "requirements": []
+  "codeowners": ["@igorguida"],
+  "requirements": [],
+  "iot_class": "local_polling"
 }

@@ -5,21 +5,21 @@ https://home-assistant.io/components/sensor.relaymaster/
 """
 
 import logging
+import re
 import xml.etree.ElementTree as ET
 from datetime import timedelta
 
 import requests
 import voluptuous as vol
 
-from homeassistant.const import (CONF_URL, CONF_USERNAME, CONF_PASSWORD)
-from homeassistant.components.binary_sensor import (BinarySensorEntity,
-                                                    PLATFORM_SCHEMA)
+from homeassistant.const import CONF_URL, CONF_USERNAME, CONF_PASSWORD
+from homeassistant.components.binary_sensor import BinarySensorEntity, PLATFORM_SCHEMA
 from homeassistant.util import Throttle
 import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = timedelta(seconds=1)
+SCAN_INTERVAL = timedelta(seconds=3)
 MIN_TIME_BETWEEN_UPDATES = timedelta(milliseconds=200)
 
 CONF_MAX_NUMBER = 'max_number'
@@ -39,11 +39,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-# pylint: disable=unused-argument
-def setup_platform(hass, config, add_devices, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up the relay board inputs."""
-    import re
-
     max_number = config.get(CONF_MAX_NUMBER)
     ignore = config.get(CONF_IGNORE_UNUSED)
     base_url = config.get(CONF_URL).rstrip('/')
@@ -54,19 +51,17 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     session.auth = requests.auth.HTTPBasicAuth(username, password)
     board = RelayMasterBoard(session, base_url)
 
-    response = None
     try:
-        response = board.get(DEVICE_CONFIG_ENDPOINT)
+        response = await hass.async_add_executor_job(board.get, DEVICE_CONFIG_ENDPOINT)
     except requests.exceptions.MissingSchema:
         _LOGGER.error("Missing resource or schema in configuration. "
                       "Add http:// to your URL")
-        return False
+        return
 
     if response is None:
-        return False
+        return
 
     inputs = []
-
     for child in ET.fromstring(response.text):
         match = re.search(INPUT_NODE_REGEX, child.tag)
         if not match:
@@ -74,13 +69,14 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         number = int(match.group(1))
         if number > max_number:
             continue
-        if ignore and re.match(UNUSED_INPUT_REGEX, child.text):
+        if ignore and child.text and re.match(UNUSED_INPUT_REGEX, child.text):
             continue
-        inputs.append(RelayMasterInput(board, number, child.text))
+        inputs.append(RelayMasterInput(board, number, child.text or ''))
 
-    add_devices(inputs)
+    async_add_entities(inputs)
 
-class RelayMasterBoard(object):
+
+class RelayMasterBoard:
     """Representation of board state."""
 
     def __init__(self, session, base_url):
@@ -95,26 +91,23 @@ class RelayMasterBoard(object):
         response = self.get(DEVICE_STATE_ENDPOINT)
         if response is None:
             return
-
         self.data = ET.fromstring(response.text)
 
     def get(self, endpoint, params=None):
         """Send request to board."""
         url = self._base_url + endpoint
-        response = None
-
         try:
-            response = self._session.get(url, timeout=10, params=params)
+            response = self._session.get(url, timeout=2, params=params)
         except requests.exceptions.ConnectionError:
             _LOGGER.warning("No route to device %s", self._base_url)
             return None
 
         if response.status_code != 200:
-            _LOGGER.warning("Request error for %s: %s",
-                            response.url, response.text)
+            _LOGGER.warning("Request error for %s: %s", response.url, response.text)
             return None
 
         return response
+
 
 class RelayMasterInput(BinarySensorEntity):
     """Representation of a RelayMaster input."""
@@ -136,9 +129,12 @@ class RelayMasterInput(BinarySensorEntity):
         """Return the state of the input."""
         return self._state
 
-    def update(self):
+    async def async_update(self):
         """Update the state of the input."""
-        self._board.update()
+        await self.hass.async_add_executor_job(self._board.update)
+
+        if self._board.data is None:
+            return
 
         tag = INPUT_NODE.format(self._number)
         for child in self._board.data:

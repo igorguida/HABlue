@@ -12,7 +12,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 #customize: !include customize.yaml
 
-cover: !include includes/covers.yaml
+template: !include includes/covers_sensors.yaml
 
 climate:
   - platform: generic_thermostat
@@ -87,7 +87,7 @@ climate:
 
   - platform: generic_thermostat
     name: pianoterra
-    heater: switch.zona_riscaldamento_pianoterra
+    heater: switch.zona_riscaldamento_p0
     target_sensor: sensor.temperature_pianoterra
     min_temp: 15
     max_temp: 21
@@ -101,7 +101,7 @@ climate:
 
   - platform: generic_thermostat
     name: primopiano
-    heater: switch.zona_riscaldamento_primopiano
+    heater: switch.zona_riscaldamento_p1
     target_sensor: sensor.temperature_primopiano
     min_temp: 15
     max_temp: 21
@@ -114,13 +114,13 @@ climate:
       minutes: 3
 
 
-device_tracker:
-  - platform: unifi_direct
-    host: 192.168.1.161
+#device_tracker:
+#  - platform: unifi_direct
+#    host: 192.168.1.61
       #port: 8443
       #verify_ssl: false
-    username: !secret unifi_username
-    password: !secret unifi_password
+#    username: !secret unifi_username
+#    password: !secret unifi_password
 
 alarm_control_panel:
   - platform: manual
@@ -255,67 +255,28 @@ sensor:
    username: !secret scheda107_username
    password: !secret scheda107_password
 
-
- - platform: template
-   sensors:
-     temperature_primopiano:
-       #  entity_id: sensor.sonda_p1
-          value_template: '{{ states.sensor.sonda_p1.state|float / 10 }}'
-          friendly_name: 'Temperatura Primo Piano'
-          unit_of_measurement: '°C'
- - platform: template
-   sensors:
-     temperature_pianoterra:
-       #entity_id: sensor.sonda_p0
-        value_template: '{{ states.sensor.sonda_p0.state|float / 20 }}'
-        friendly_name: 'Temperatura Piano Terra'
-        unit_of_measurement: '°C'
-
- - platform: template
-   sensors:
-     temperature_madda:
-       #   entity_id: sensor.sonda_madda
-        value_template: '{{ states.sensor.sonda_madda.state|float / 20 }}'
-        friendly_name: 'Temperatura Madda'
-        unit_of_measurement: '°C'
-
- - platform: template
-   sensors:
-      temperature_studio:
-        #entity_id: sensor.sonda_studio
-        value_template: '{{ states.sensor.sonda_studio.state|float / 20 }}'
-        friendly_name: 'Temperatura Studio Igor'
-        unit_of_measurement: '°C'
-
- - platform: template
-   sensors:
-      temperature_bagnomadda:
-        #entity_id: sensor.sonda_bagno
-        value_template: '{{ states.sensor.sonda_bagno.state|float / 10 }}'
-        friendly_name: 'Temperatura Bagno Madda'
-        unit_of_measurement: '°C'
-
- - platform: template
-   sensors:
-      temperature_cucina:
-        #entity_id: sensor.sonda_cucina
-        value_template: '{{ states.sensor.sonda_cucina.state|float / 20 }}'
-        friendly_name: 'Temperatura Cucina'
-        unit_of_measurement: '°C'
-
- - platform: template
-   sensors:
-      temperature_design:
-        #entity_id: sensor.sonda_design
-        value_template: '{{ states.sensor.sonda_design.state|float / 20 }}'
-        friendly_name: 'Temperatura Sala Design'
-        unit_of_measurement: '°C'
-
  - platform: time_date
    display_options:
-    - 'time'
-    - 'date'
-    - 'date_time'
-    - 'time_date'
-    - 'time_utc'
-    - 'beat'
+     - 'time'
+     - 'date'
+     - 'date_time'
+     - 'time_date'
+     - 'time_utc'
+rest_command:
+  foscam_up:
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=0&onestep=1&user=admin&pwd=c4mb14t4"
+
+  foscam_down:
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=2&onestep=1&user=admin&pwd=c4mb14t4"
+
+  foscam_left:
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=6&onestep=1&user=admin&pwd=c4mb14t4"
+
+  foscam_right:
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=4&onestep=1&user=admin&pwd=c4mb14t4"
+
+  foscam_stop:
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=1&user=admin&pwd=c4mb14t4"
+    
+    
+    

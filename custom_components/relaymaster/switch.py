@@ -5,14 +5,15 @@ https://home-assistant.io/components/switch.relaymaster/
 """
 
 import logging
+import re
 import xml.etree.ElementTree as ET
 from datetime import timedelta
 
 import requests
 import voluptuous as vol
 
-from homeassistant.components.switch import (SwitchEntity, PLATFORM_SCHEMA)
-from homeassistant.const import (CONF_URL, CONF_USERNAME, CONF_PASSWORD)
+from homeassistant.components.switch import SwitchEntity, PLATFORM_SCHEMA
+from homeassistant.const import CONF_URL, CONF_USERNAME, CONF_PASSWORD
 from homeassistant.util import Throttle
 import homeassistant.helpers.config_validation as cv
 
@@ -32,11 +33,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-# pylint: disable=unused-argument
-def setup_platform(hass, config, add_devices, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up the relay board switches."""
-    import re
-
     base_url = config.get(CONF_URL).rstrip('/')
     username = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
@@ -45,25 +43,23 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     session.auth = requests.auth.HTTPBasicAuth(username, password)
     board = RelayMasterBoard(session, base_url)
 
-    response = None
     try:
-        response = board.get(DEVICE_CONFIG_ENDPOINT)
+        response = await hass.async_add_executor_job(board.get, DEVICE_CONFIG_ENDPOINT)
     except requests.exceptions.MissingSchema:
         _LOGGER.error("Missing resource or schema in configuration. "
                       "Add http:// to your URL")
-        return False
+        return
 
     if response is None:
-        return False
+        return
 
     relays = []
-
     for child in ET.fromstring(response.text):
         if not re.match(OUTPUT_NODE_REGEX, child.tag):
             continue
-        config = child.text.split(';')
-        name = config[0]
-        pair = (int(config[10]), int(config[11]))
+        cfg = child.text.split(';')
+        name = cfg[0]
+        pair = (int(cfg[10]), int(cfg[11]))
         if pair[0] == 0:
             continue
         if pair[1] != 0:
@@ -72,9 +68,10 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         else:
             relays.append(RelayMasterRelay(board, pair[0], name))
 
-    add_devices(relays)
+    async_add_entities(relays)
 
-class RelayMasterBoard(object):
+
+class RelayMasterBoard:
     """Representation of board state."""
 
     def __init__(self, session, base_url):
@@ -89,26 +86,23 @@ class RelayMasterBoard(object):
         response = self.get(DEVICE_STATE_ENDPOINT)
         if response is None:
             return
-
         self.data = ET.fromstring(response.text)
 
     def get(self, endpoint, params=None):
         """Send request to board."""
         url = self._base_url + endpoint
-        response = None
-
         try:
-            response = self._session.get(url, timeout=10, params=params)
+            response = self._session.get(url, timeout=2, params=params)
         except requests.exceptions.ConnectionError:
             _LOGGER.warning("No route to device %s", self._base_url)
             return None
 
         if response.status_code != 200:
-            _LOGGER.warning("Request error for %s: %s",
-                            response.url, response.text)
+            _LOGGER.warning("Request error for %s: %s", response.url, response.text)
             return None
 
         return response
+
 
 class RelayMasterRelay(SwitchEntity):
     """Representation of a RelayMaster relay."""
@@ -130,33 +124,34 @@ class RelayMasterRelay(SwitchEntity):
         """Return true if relay is on."""
         return self._state
 
-    def turn_on(self, **kwargs):
+    async def async_turn_on(self, **kwargs):
         """Switch the relay on."""
         if self._state:
             return
-
-        response = self._board.get(RELAY_TOGGLE_ENDPOINT,
-                                   params={'rel': self._number})
+        response = await self.hass.async_add_executor_job(
+            self._board.get, RELAY_TOGGLE_ENDPOINT, {'rel': self._number}
+        )
         if response is None:
             return
-
         self._state = True
 
-    def turn_off(self, **kwargs):
+    async def async_turn_off(self, **kwargs):
         """Switch the relay off."""
         if not self._state:
             return
-
-        response = self._board.get(RELAY_TOGGLE_ENDPOINT,
-                                   params={'rel': self._number})
+        response = await self.hass.async_add_executor_job(
+            self._board.get, RELAY_TOGGLE_ENDPOINT, {'rel': self._number}
+        )
         if response is None:
             return
-
         self._state = False
 
-    def update(self):
+    async def async_update(self):
         """Update the state of the relay."""
-        self._board.update()
+        await self.hass.async_add_executor_job(self._board.update)
+
+        if self._board.data is None:
+            return
 
         for child in self._board.data:
             if child.tag == RELAY_NODE.format(self._number):

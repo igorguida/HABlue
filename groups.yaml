@@ -51,13 +51,11 @@
     icon: mdi:thermometer-lines
     entities:
       - climate.bagno_nikyigor
-      - climate.bagnotaverna_bagnotaverna 
       - climate.TV_televisione
       - climate.sala_bonsai
       - climate.sgabuzzino_sgabuzzino
       - climate.stanza_igorniky
       - climate.stanza_ospiti_stanza_ospiti
-      - climate.studio_nico_studionico
       - climate.studioigor
       - climate.madda
       - climate.bagnomadda
@@ -208,7 +206,6 @@
       - switch.luce_down_bagnodisotto
       - switch.luce_down_specchierabagnodisotto
       - switch.luce_down_lavanderiadisotto
-      - climate.bagnotaverna_bagnotaverna
 
   stanzaospiti:
     name: "Stanza Ospiti"
@@ -223,7 +220,6 @@
       - switch.luce_down_ingstudio
       - switch.luce_down_istudio
       - switch.luce_down_nstudio
-      - climate.studio_nico_studionico
 
   luci:
     name: Luci
