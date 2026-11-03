@@ -264,19 +264,34 @@ sensor:
      - 'time_utc'
 rest_command:
   foscam_up:
-    url: "http://192.168.1.118:88/decoder_control.cgi?command=0&onestep=1&user=admin&pwd=c4mb14t4"
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=0&onestep=1&user={{ user }}&pwd={{ pwd }}"
+    variables:
+      user: !secret foscam_user
+      pwd: !secret foscam_password
 
   foscam_down:
-    url: "http://192.168.1.118:88/decoder_control.cgi?command=2&onestep=1&user=admin&pwd=c4mb14t4"
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=2&onestep=1&user={{ user }}&pwd={{ pwd }}"
+    variables:
+      user: !secret foscam_user
+      pwd: !secret foscam_password
 
   foscam_left:
-    url: "http://192.168.1.118:88/decoder_control.cgi?command=6&onestep=1&user=admin&pwd=c4mb14t4"
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=6&onestep=1&user={{ user }}&pwd={{ pwd }}"
+    variables:
+      user: !secret foscam_user
+      pwd: !secret foscam_password
 
   foscam_right:
-    url: "http://192.168.1.118:88/decoder_control.cgi?command=4&onestep=1&user=admin&pwd=c4mb14t4"
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=4&onestep=1&user={{ user }}&pwd={{ pwd }}"
+    variables:
+      user: !secret foscam_user
+      pwd: !secret foscam_password
 
   foscam_stop:
-    url: "http://192.168.1.118:88/decoder_control.cgi?command=1&user=admin&pwd=c4mb14t4"
+    url: "http://192.168.1.118:88/decoder_control.cgi?command=1&user={{ user }}&pwd={{ pwd }}"
+    variables:
+      user: !secret foscam_user
+      pwd: !secret foscam_password
     
     
     
